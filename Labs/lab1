@@ -1,9 +1,9 @@
-1️⃣ Initial Access
-Tactic: Initial Access (TA0001)
+##1️⃣ Initial Access
+* Tactic: Initial Access (TA0001)
 
-Technique: T1566.002 – Phishing: Spearphishing Link
+* Technique: T1566.002 – Phishing: Spearphishing Link
 
-Behavior:
+* Behavior:
 
 Attackers embed malicious URLs inside QR codes.
 
@@ -23,12 +23,12 @@ The phishing interaction shifts from desktop (email client) to mobile device (QR
 
 Security tools may not inspect the embedded QR destination URL before user interaction.
 
-2️⃣ Execution
-Tactic: Execution (TA0002)
+##2️⃣ Execution
+* Tactic: Execution (TA0002)
 
-Technique: T1204.001 – User Execution: Malicious Link
+* Technique: T1204.001 – User Execution: Malicious Link
 
-Behavior:
+* Behavior:
 
 The attack requires explicit user interaction (scanning and tapping).
 
@@ -36,12 +36,12 @@ The victim manually initiates the connection to the malicious site.
 
 In some cases, QR codes trigger deep links that open specific mobile apps.
 
-3️⃣ Defense Evasion
-Tactic: Defense Evasion (TA0005)
+##3️⃣ Defense Evasion
+* Tactic: Defense Evasion (TA0005)
 
-Technique: T1027 – Obfuscated Files or Information
+* Technique: T1027 – Obfuscated Files or Information
 
-Behavior:
+* Behavior:
 
 Use of URL shorteners to conceal final malicious domains.
 
@@ -49,12 +49,12 @@ Multi-step redirection chains to hide infrastructure.
 
 QR code encoding itself hides the visible URL from the user.
 
-4️⃣ Credential Access
-Tactic: Credential Access (TA0006)
+##4️⃣ Credential Access
+* Tactic: Credential Access (TA0006)
 
-Technique: T1056.003 – Input Capture: Web Portal Capture
+* Technique: T1056.003 – Input Capture: Web Portal Capture
 
-Behavior:
+* Behavior:
 
 Fake login pages mimic legitimate services (e.g., cloud or enterprise portals).
 
@@ -74,12 +74,12 @@ Attackers capture session cookies or MFA tokens.
 
 Enables account takeover even when MFA is enabled.
 
-5️⃣ Command and Control
-Tactic: Command and Control (TA0011)
+##5️⃣ Command and Control
+* Tactic: Command and Control (TA0011)
 
-Technique: T1071.001 – Application Layer Protocol: Web Protocols
+* Technique: T1071.001 – Application Layer Protocol: Web Protocols
 
-Behavior:
+* Behavior:
 
 Phishing pages communicate with attacker infrastructure over HTTP/HTTPS.
 
