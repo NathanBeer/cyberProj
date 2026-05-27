@@ -26,6 +26,8 @@ CMD_INJECTION = re.compile(
 PATH_TRAVERSAL = re.compile(r"(\.\./|\.\.\\|%2e%2e|%252e)", re.IGNORECASE)
 LDAP_PATTERNS = re.compile(r"(\)\s*\(|\|\s*\(|&\s*\(|!\s*\(|\*\s*\))", re.IGNORECASE)
 ENCODING_ANOMALY = re.compile(r"(%[0-9a-f]{2}){3,}", re.IGNORECASE)
+NEGATIVE_VALUE   = re.compile(r"[=&](-\d+)", re.IGNORECASE)
+EXTREME_VALUE    = re.compile(r"[=&](-?\d{6,})", re.IGNORECASE)
 
 
 def _count_special_chars(text: str) -> int:
@@ -79,6 +81,9 @@ def extract_features(request: dict) -> dict:
         # SQL count
         "sql_keyword_count": len(SQL_KEYWORDS.findall(combined)),
         "encoded_chars_count": len(re.findall(r"%[0-9a-fA-F]{2}", combined)),
+        # Parameter value anomalies (catches parameter tampering: precio=-1, cantidad=-99999)
+        "has_negative_param": int(bool(NEGATIVE_VALUE.search(url + "&" + body))),
+        "has_extreme_value":  int(bool(EXTREME_VALUE.search(url + "&" + body))),
     }
 
 

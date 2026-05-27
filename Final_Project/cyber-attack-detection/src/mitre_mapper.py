@@ -195,6 +195,15 @@ def detect_attack_type(request: dict) -> str:
     return "parameter_tampering"
 
 
+def _technique_url(technique_id: str) -> str:
+    """Build the canonical MITRE ATT&CK URL for a technique or sub-technique.
+    T1059.007 → https://attack.mitre.org/techniques/T1059/007/
+    T1083     → https://attack.mitre.org/techniques/T1083/
+    """
+    return "https://attack.mitre.org/techniques/" + technique_id.replace(".", "/") + "/"
+
+
 def get_mitre_info(attack_type: str) -> dict:
     """Return MITRE ATT&CK details for a given attack type key."""
-    return MITRE_TECHNIQUES.get(attack_type, MITRE_TECHNIQUES["parameter_tampering"])
+    info = MITRE_TECHNIQUES.get(attack_type, MITRE_TECHNIQUES["parameter_tampering"])
+    return {**info, "url": _technique_url(info["id"])}

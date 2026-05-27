@@ -43,7 +43,9 @@ def _extract_path(url_field: str) -> str:
     """
     The CSV URL column contains the full URL + HTTP version, e.g.:
       http://localhost:8080/tienda1/index.jsp HTTP/1.1
-    Extract just the path+query portion.
+    Extract just the path+query portion, stripping UI submit-button params
+    (B1=Añadir / B1=Comprar) that are CSIC-specific and would let the model
+    cheat by learning button text rather than attack features.
     """
     if not isinstance(url_field, str):
         return ""
@@ -51,6 +53,8 @@ def _extract_path(url_field: str) -> str:
     url_field = re.sub(r"\s+HTTP/\S+$", "", url_field.strip())
     # Strip scheme + host
     url_field = re.sub(r"^https?://[^/]+", "", url_field)
+    # Strip B1 submit-button parameter (CSIC artefact, not a real attack signal)
+    url_field = re.sub(r"[&?]B1=[^&]*", "", url_field)
     return url_field or "/"
 
 
