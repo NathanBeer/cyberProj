@@ -1,0 +1,47 @@
+# Lab 1 — Cyber Threat Intelligence (CTI) Report Mapping to MITRE ATT&CK
+
+## Group Members
+* Nathan Beer
+* Lior Lisker
+
+---
+
+## Link to the Source CTI Report
+* **Source:** Microsoft Security Blog
+* **Report Title:** From poisoned search results to GPU mining: A cryptojacking campaign abusing ScreenConnect and Microsoft .NET utilities
+* **URL:** https://www.microsoft.com/en-us/security/blog/2026/05/26/poisoned-search-results-gpu-mining-cryptojacking-campaign-abusing-screenconnect-microsoft-net-utilities/
+
+---
+
+## Short Attack Summary
+This threat intelligence report outlines an active, highly targeted 2026 cryptojacking campaign engineered to compromise systems equipped with high-performance GPUs. The threat actors lure technical users looking for common system utilities (such as CrystalDiskInfo or HWMonitor) by manipulating search engine results and abusing LLM-based AI chatbot interactions to serve malicious download links. Once a victim downloads the package, the campaign executes a multi-stage attack chain using DLL side-loading to silently install a legitimate Remote Monitoring and Management (RMM) tool, ScreenConnect. The attackers abuse ScreenConnect to establish persistent remote access and drop a custom cryptocurrency mining loader named `simplerunpe.exe`. Finally, the malware performs process hollowing into legitimate, Microsoft-signed .NET Framework utilities to run an unauthorized Monero miner. This campaign matters because it reflects a dangerous evolution where threat actors combine modern social engineering (abusing AI chatbots) with trusted administrative tools to evade traditional security perimeters and lay the groundwork for potential future ransomware deployment.
+
+---
+
+## Attack Sequence
+The chronological workflow of the attack behavior observed in this campaign occurs across five distinct phases:
+
+1. **User Search & Redirection:** The user searches for hardware-monitoring utilities via search engines or AI chatbots and is presented with lookalike, attacker-controlled domains hosting fake software packages.
+2. **Download & Execution:** The user downloads a weaponized ZIP file. When opened, an application launcher executes and initiates a hidden DLL side-loading process.
+3. **ScreenConnect Deployment:** The side-loading process silently installs a legitimate, pre-configured instance of ConnectWise ScreenConnect.
+4. **Command & Control Connection:** The ScreenConnect agent checks back into the attacker's infrastructure, granting them persistent remote access and execution capabilities.
+5. **Process Hollowing & Mining:** The attackers drop `simplerunpe.exe`, which hollows out legitimate Microsoft-signed .NET binaries to stealthily inject and execute the heavy GPU cryptocurrency mining payload.
+
+---
+
+## MITRE ATT&CK Mapping
+
+| Tactic | Technique | Behavior from Report | Link to ATT&CK Entry |
+| :--- | :--- | :--- | :--- |
+| **Initial Access** | Search Optimization (T1566.004) | Attackers poison search engine rankings and manipulate LLM chatbot responses to return over 150 malicious lookalike domains to unsuspecting users. | [MITRE ATT&CK T1566.004](https://attack.mitre.org/techniques/T1566/004/) |
+| **Execution** | User Execution: Malicious File (T1204.002) | The victim is tricked into manually downloading and opening a compressed archive containing the masqueraded system utility installer. | [MITRE ATT&CK T1204.002](https://attack.mitre.org/techniques/T1204/002/) |
+| **Persistence** | Command and Scripting Interpreter: PowerShell (T1059.001) | The attack flow utilizes alternative PowerShell delivery mechanisms to maintain script execution and establish reliable hooks into the operating system. | [MITRE ATT&CK T1059.001](https://attack.mitre.org/techniques/T1059/001/) |
+| **Defense Evasion** | Hijack Execution Flow: DLL Side-Loading (T1574.002) | The malicious utility launcher drops a rogue DLL alongside a benign executable, abusing the Windows search order to execute unauthorized code silently. | [MITRE ATT&CK T1574.002](https://attack.mitre.org/techniques/T1574/002/) |
+| **Defense Evasion** | Process Injection: Process Hollowing (T1055.012) | The custom mining loader (`simplerunpe.exe`) unmaps memory from legitimate, signed Microsoft .NET Framework utilities and substitutes it with the mining payload. | [MITRE ATT&CK T1055.012](https://attack.mitre.org/techniques/T1055/012/) |
+| **Command & Control** | Remote Access Software (T1219) | Threat actors abuse a fully legitimate deployment of ScreenConnect to control the compromised machine, bypass detection, and deliver secondary payloads. | [MITRE ATT&CK T1219](https://attack.mitre.org/techniques/T1219/) |
+| **Resource Hijacking** | Resource Hijacking (T1496) | The threat actors deploy an automated mining orchestration layout to maximize the usage of high-performance host GPUs for unauthorized cryptocurrency extraction. | [MITRE ATT&CK T1496](https://attack.mitre.org/techniques/T1496/) |
+
+---
+
+## Insights / What You Learned
+Through this lab mapping, we learned how threat actors are actively capitalizing on modern user habits, shifting away from standard phishing emails toward poisoning AI chatbot responses and search engines to capture more technical targets. We also discovered how effectively attackers use "Living off the Land" methodologies by abusing legitimate software like ScreenConnect and signed .NET utilities, proving that security teams cannot rely solely on blocking known malware signatures but must prioritize behavioral analysis.
