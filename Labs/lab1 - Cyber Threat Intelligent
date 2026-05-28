@@ -1,6 +1,6 @@
-# Lab 1 — Cyber Threat Intelligence (CTI) Report Mapping to MITRE ATT&CK
+Lab 1 — Cyber Threat Intelligence (CTI) Report Mapping to MITRE ATT&CK
 
-## Group Members
+Group Members
 * [Insert Student Name 1]
 * [Insert Student Name 2]
 * [Insert Student Name 3]
@@ -8,19 +8,19 @@
 
 ---
 
-## Link to the Source CTI Report
+Link to the Source CTI Report
 * **Source:** Microsoft Security Blog
 * **Report Title:** From poisoned search results to GPU mining: A cryptojacking campaign abusing ScreenConnect and Microsoft .NET utilities
 * **URL:** https://www.microsoft.com/en-us/security/blog/2026/05/26/poisoned-search-results-gpu-mining-cryptojacking-campaign-abusing-screenconnect-microsoft-net-utilities/
 
 ---
 
-## Short Attack Summary
+Short Attack Summary
 This threat intelligence report outlines an active, highly targeted 2026 cryptojacking campaign engineered to compromise systems equipped with high-performance GPUs. The threat actors lure technical users looking for common system utilities (such as CrystalDiskInfo or HWMonitor) by manipulating search engine results and abusing LLM-based AI chatbot interactions to serve malicious download links. Once a victim downloads the package, the campaign executes a multi-stage attack chain using DLL side-loading to silently install a legitimate Remote Monitoring and Management (RMM) tool, ScreenConnect. The attackers abuse ScreenConnect to establish persistent remote access and drop a custom cryptocurrency mining loader named `simplerunpe.exe`. Finally, the malware performs process hollowing into legitimate, Microsoft-signed .NET Framework utilities to run an unauthorized Monero miner. This campaign matters because it reflects a dangerous evolution where threat actors combine modern social engineering (abusing AI chatbots) with trusted administrative tools to evade traditional security perimeters and lay the groundwork for potential future ransomware deployment.
 
 ---
 
-## Attack Sequence
+Attack Sequence
 The chronological workflow of the attack behavior observed in this campaign occurs across five distinct phases:
 
 1. **User Search & Redirection:** The user searches for hardware-monitoring utilities via search engines or AI chatbots and is presented with lookalike, attacker-controlled domains hosting fake software packages.
