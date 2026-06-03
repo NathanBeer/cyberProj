@@ -353,7 +353,7 @@ After running all four notebooks, notebook 3 generates the following visualisati
 
 Real-time classification output showing MITRE technique links and chain alerts as requests arrive:
 
-![Consumer Output](docs/screenshots/consumer_output.png)
+![Consumer Output](cyber-attack-detection/docs/screenshots/consumer_output.png)
 
 ---
 
@@ -361,7 +361,7 @@ Real-time classification output showing MITRE technique links and chain alerts a
 
 Pie chart showing the proportion of normal vs. anomalous traffic across all 300 classified requests:
 
-![Traffic Split](docs/screenshots/traffic_split.png)
+![Traffic Split](cyber-attack-detection/docs/screenshots/traffic_split.png)
 
 ---
 
@@ -369,7 +369,7 @@ Pie chart showing the proportion of normal vs. anomalous traffic across all 300 
 
 Bar chart of detected attack types (SQL injection, XSS, path traversal, command injection, etc.):
 
-![Attack Types](docs/screenshots/attack_types.png)
+![Attack Types](cyber-attack-detection/docs/screenshots/attack_types.png)
 
 ---
 
@@ -377,7 +377,7 @@ Bar chart of detected attack types (SQL injection, XSS, path traversal, command 
 
 Bar chart mapping detections to MITRE tactic categories (Initial Access, Execution, Discovery, Collection, Impact):
 
-![MITRE Tactics](docs/screenshots/mitre_tactics.png)
+![MITRE Tactics](cyber-attack-detection/docs/screenshots/mitre_tactics.png)
 
 ---
 
@@ -385,7 +385,7 @@ Bar chart mapping detections to MITRE tactic categories (Initial Access, Executi
 
 Histogram of ML classifier confidence scores — shows how decisive the model is across all 300 requests:
 
-![Confidence](docs/screenshots/confidence_histogram.png)
+![Confidence](cyber-attack-detection/docs/screenshots/confidence_histogram.png)
 
 ---
 
@@ -393,7 +393,7 @@ Histogram of ML classifier confidence scores — shows how decisive the model is
 
 Confusion matrix comparing ground-truth labels (from the producer) vs. ML predictions, plus per-class precision/recall:
 
-![Confusion Matrix](docs/screenshots/confusion_matrix.png)
+![Confusion Matrix](cyber-attack-detection/docs/screenshots/confusion_matrix.png)
 
 ---
 
@@ -401,7 +401,7 @@ Confusion matrix comparing ground-truth labels (from the producer) vs. ML predic
 
 Bar chart of detected multi-stage attack chain sequences and how frequently each pattern appeared:
 
-![Chain Patterns](docs/screenshots/chain_patterns.png)
+![Chain Patterns](cyber-attack-detection/docs/screenshots/chain_patterns.png)
 
 ---
 
@@ -409,7 +409,7 @@ Bar chart of detected multi-stage attack chain sequences and how frequently each
 
 End-to-end trace view for a single classified HTTP request, showing all pipeline spans:
 
-![Jaeger Traces](docs/screenshots/jaeger_traces.png)
+![Jaeger Traces](cyber-attack-detection/docs/screenshots/jaeger_traces.png)
 
 ---
 
