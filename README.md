@@ -1,8 +1,22 @@
-# 🛡️ Cyber Attack Detection Agent — MITRE ATT&CK
+# 🛡️ Suspicious network activity detection with Random Forest based model on premade dataset — MITRE ATT&CK
 
 Detects web application attacks in real-time HTTP traffic using a trained Random Forest
 classifier, maps findings to the MITRE ATT&CK framework, and streams everything through
 a Kafka pipeline with distributed tracing. Runs fully offline — no API keys required.
+We're using a Docker environment for 
+
+## ✨ Features
+
+- **ML Classifier** — Random Forest trained exclusively on the CSIC 2010 dataset (no synthetic training data)
+- **21-Feature Extractor** — URL length, body length, SQL keywords, XSS patterns, path traversal, encoding anomalies, negative/extreme parameter values, and more
+- **8 Attack Types** — SQL injection, XSS, command injection, path traversal, buffer overflow, LDAP injection, CSRF, parameter tampering
+- **MITRE ATT&CK Mapping** — every detection linked to a technique ID, tactic, and direct URL
+- **Attack Chain Detection** — flags multi-stage attacks from the same session (e.g. path traversal → SQL injection → command injection)
+- **Kafka Streaming Pipeline** — producer → classifier → CSV, all traced end-to-end
+- **Jaeger Distributed Tracing** — every pipeline stage is a span, visible in the Jaeger UI
+- **Redpanda Console** — live view of Kafka topic messages
+- **Statistics Notebook** — confusion matrix, confidence histograms, MITRE tactic charts, chain pattern bar chart
+- **Flask Web App** — interactive single-request analyser at `localhost:5000`
 
 **Repository:** [github.com/NathanBeer/cyberProj](https://github.com/NathanBeer/cyberProj/tree/main)
 
@@ -51,21 +65,6 @@ generates novel payloads so the model is always tested against traffic it has ne
 > **Download from Kaggle:** https://www.kaggle.com/datasets/ispangler/csic-2010-web-application-attacks
 >
 > Place the file at: `cyber-attack-detection/data/csic_database.csv`
-
----
-
-## ✨ Features
-
-- **ML Classifier** — Random Forest trained exclusively on the CSIC 2010 dataset (no synthetic training data)
-- **21-Feature Extractor** — URL length, body length, SQL keywords, XSS patterns, path traversal, encoding anomalies, negative/extreme parameter values, and more
-- **8 Attack Types** — SQL injection, XSS, command injection, path traversal, buffer overflow, LDAP injection, CSRF, parameter tampering
-- **MITRE ATT&CK Mapping** — every detection linked to a technique ID, tactic, and direct URL
-- **Attack Chain Detection** — flags multi-stage attacks from the same session (e.g. path traversal → SQL injection → command injection)
-- **Kafka Streaming Pipeline** — producer → classifier → CSV, all traced end-to-end
-- **Jaeger Distributed Tracing** — every pipeline stage is a span, visible in the Jaeger UI
-- **Redpanda Console** — live view of Kafka topic messages
-- **Statistics Notebook** — confusion matrix, confidence histograms, MITRE tactic charts, chain pattern bar chart
-- **Flask Web App** — interactive single-request analyser at `localhost:5000`
 
 ---
 
