@@ -1,9 +1,8 @@
-# 🛡️ Suspicious network activity detection with Random Forest based model on premade dataset — MITRE ATT&CK
+# 🛡️ Suspicious network activity detection and classification with Random Forest
 
 Detects web application attacks in real-time HTTP traffic using a trained Random Forest
 classifier, maps findings to the MITRE ATT&CK framework, and streams everything through
 a Kafka pipeline with distributed tracing. Runs fully offline — no API keys required.
-We're using a Docker environment for 
 
 ## ✨ Features
 
@@ -17,6 +16,7 @@ We're using a Docker environment for
 - **Redpanda Console** — live view of Kafka topic messages
 - **Statistics Notebook** — confusion matrix, confidence histograms, MITRE tactic charts, chain pattern bar chart
 - **Flask Web App** — interactive single-request analyser at `localhost:5000`
+- **Dockerized Environment** - to deploy the app easily
 
 **Repository:** [github.com/NathanBeer/cyberProj](https://github.com/NathanBeer/cyberProj/tree/main)
 
