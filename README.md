@@ -247,6 +247,12 @@ python run.py            # starts Flask at http://localhost:5000
 
 Or double-click **`run.bat`**.
 
+Paste a raw HTTP request, click **Analyze**, and the app classifies it and maps it to the
+matching MITRE ATT&CK technique. Quick-fill buttons (SQL Inj., XSS, Cmd Inj., Normal) load
+example requests instantly.
+
+![Flask Web App](cyber-attack-detection/docs/screenshots/flask_app.png)
+
 ---
 
 ## 🔄 Data Generation (Notebook 1 — Producer)
@@ -409,6 +415,9 @@ Bar chart of detected multi-stage attack chain sequences and how frequently each
 End-to-end trace view for a single classified HTTP request, showing all pipeline spans:
 
 ![Jaeger Traces](cyber-attack-detection/docs/screenshots/jaeger_traces.png)
+
+<img width="1595" height="748" alt="image" src="https://github.com/user-attachments/assets/4e14267e-ae56-4863-9e1f-4882dde17f5e" />
+
 
 ---
 
