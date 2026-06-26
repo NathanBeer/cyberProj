@@ -418,6 +418,8 @@ End-to-end trace view for a single classified HTTP request, showing all pipeline
 
 ### Flask App
 
+An app that detects suspitious activities in HTTP requests
+
 ![Flask App](cyber-attack-detection/docs/screenshots/flask_app.jpeg)
 
 ---
