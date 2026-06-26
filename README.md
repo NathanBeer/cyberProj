@@ -416,6 +416,9 @@ End-to-end trace view for a single classified HTTP request, showing all pipeline
 
 ![Jaeger Traces](cyber-attack-detection/docs/screenshots/jaeger_traces.png)
 
+### Flask App
+
+![Flask App](cyber-attack-detection/docs/screenshots/flask_app.jpeg)
 
 ---
 
