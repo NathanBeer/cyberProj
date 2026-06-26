@@ -251,7 +251,12 @@ Paste a raw HTTP request, click **Analyze**, and the app classifies it and maps 
 matching MITRE ATT&CK technique. Quick-fill buttons (SQL Inj., XSS, Cmd Inj., Normal) load
 example requests instantly.
 
-![Flask Web App](cyber-attack-detection/docs/screenshots/flask_app.png)
+
+### Flask App
+
+An app that detects suspitious activities in HTTP requests:
+
+![Flask App](cyber-attack-detection/docs/screenshots/flask_app.jpeg)
 
 ---
 
@@ -416,11 +421,6 @@ End-to-end trace view for a single classified HTTP request, showing all pipeline
 
 ![Jaeger Traces](cyber-attack-detection/docs/screenshots/jaeger_traces.png)
 
-### Flask App
-
-An app that detects suspitious activities in HTTP requests:
-
-![Flask App](cyber-attack-detection/docs/screenshots/flask_app.jpeg)
 
 ---
 
