@@ -416,7 +416,6 @@ End-to-end trace view for a single classified HTTP request, showing all pipeline
 
 ![Jaeger Traces](cyber-attack-detection/docs/screenshots/jaeger_traces.png)
 
-https://cdn.discordapp.com/attachments/1503386162218401966/1520021511271092284/flask_app.png?ex=6a3fadd8&is=6a3e5c58&hm=ff327a5769054aa76537b7c5e0d6971dd61f592ad5ebda6b7bb7e784b79fef51
 
 ---
 
